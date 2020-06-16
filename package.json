@@ -1,0 +1,37 @@
+{
+  "name": "eslint-config-tracknamic",
+  "version": "1.0.0",
+  "description": "eslint shareable config used at Tracknamic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.valgbar.ro/tracknamic/eslint-config-tracknamic.git"
+  },
+  "keywords": [
+    "eslint",
+    "config",
+    "tracknamic"
+  ],
+  "author": "Rares",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-standard": "^14.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "standard": "*"
+  },
+  "peerDependencies": {
+    "eslint": ">=6.0.1",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": ">=2.18.0",
+    "eslint-plugin-node": ">=9.1.0",
+    "eslint-plugin-promise": ">=4.2.1",
+    "eslint-plugin-standard": ">=4.0.0"
+  }
+}

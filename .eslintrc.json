@@ -7,6 +7,9 @@
 			"objects": "only-multiline",
 			"imports": "only-multiline",
 			"exports": "only-multiline"
+		}],
+		"no-tabs": ["error", {
+			"allowIndentationTabs": true
 		}]
 	}
 }

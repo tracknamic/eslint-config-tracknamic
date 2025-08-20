@@ -18,12 +18,9 @@
 		"react/jsx-indent-props": ["error", "tab"],
 		"react/react-in-jsx-scope": 0,
 		"react/jsx-uses-react": 0,
-		"no-restricted-globals": [
-			"error",
-			{
-				"name": "find",
-				"message": "not imported"
-			}
-		]
+		"no-restricted-globals": ["error", {
+			"name": "find",
+			"message": "not imported"
+		}],
 	}
 }

@@ -21,6 +21,6 @@
 		"no-restricted-globals": ["error", {
 			"name": "find",
 			"message": "not imported"
-		}],
+		}]
 	}
 }

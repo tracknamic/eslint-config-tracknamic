@@ -10,7 +10,7 @@
 In your project, install this config **and its peer dependencies**:
 
 ```sh
-npm i -D eslint-config-tracknamic eslint @eslinter/eslint-config-standard @stylistic/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks
+npm i -D eslint-config-tracknamic@git+https://github.com/tracknamic/linter.git eslint @eslinter/eslint-config-standard @stylistic/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks
 ```
 
 ---

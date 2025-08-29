@@ -41,15 +41,6 @@ export default [
 				exports: 'only-multiline',
 			}],
 			'@stylistic/no-tabs': ['error', { allowIndentationTabs: true }],
-			'@stylistic/jsx-indent': ['error', 'tab', {
-				checkAttributes: true,
-				indentLogicalExpressions: true,
-			}],
-			'@stylistic/jsx-indent-props': ['error', 'tab'],
-
-			// --- react specifics (same intent as your legacy rules) ---
-			// 'react/react-in-jsx-scope': 'off', // React 17+ doesn’t require it
-			// 'react/jsx-uses-react': 'off',
 
 			// hooks recommended (flat form)
 			'react-hooks/rules-of-hooks': 'error',

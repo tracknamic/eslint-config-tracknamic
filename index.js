@@ -1,7 +1,10 @@
-import standard from '@eslinter/eslint-config-standard'
+import * as standardNS from '@eslinter/eslint-config-standard'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import stylistic from '@stylistic/eslint-plugin'
+
+// resolve default vs namespace
+const standard = standardNS.default ?? standardNS
 
 /**
  * Tracknamic flat ESLint config

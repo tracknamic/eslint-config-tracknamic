@@ -1,0 +1,23 @@
+{
+	"name": "eslint-config-tracknamic",
+	"version": "2.0.0",
+	"description": "ESLint flat shareable config used at Tracknamic",
+	"license": "UNLICENSED",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tracknamic/eslint-config-tracknamic.git"
+	},
+	"keywords": ["eslint","standard","linter","config","tracknamic","flat-config"],
+	"type": "module",
+	"main": "index.js",
+	"engines": {
+		"node": ">=18.18.0"
+	},
+	"peerDependencies": {
+		"eslint": "^9.0.0",
+		"@eslinter/eslint-config-standard": "^0.1.2",
+		"@stylistic/eslint-plugin": "^5.2.3",
+		"eslint-plugin-react": "^7.37.0",
+		"eslint-plugin-react-hooks": "^5.0.0"
+	}
+}

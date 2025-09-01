@@ -1,64 +1,65 @@
-import * as standardNS from '@eslinter/eslint-config-standard'
-import reactPlugin from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import stylistic from '@stylistic/eslint-plugin'
+import js from '@eslint/js'
+import importX from 'eslint-plugin-import-x'
+import n from 'eslint-plugin-n'
+import promise from 'eslint-plugin-promise'
 
-// resolve default vs namespace
-const standard = standardNS.default ?? standardNS
-
-/**
- * Tracknamic flat ESLint config
- * - Base: StandardJS (flat)
- * - Formatter: ESLint + @stylistic (no Prettier/compat required)
- * - React: react + react-hooks
- */
-export default [
-	// 1) StandardJS baseline (flat)
-	standard,
-	// 2) Tracknamic customizations
-	{
-		files: ['**/*.{js,jsx,mjs,cjs}'],
-		languageOptions: {
-			ecmaVersion: 2022,
-			sourceType: 'module',
-			parserOptions: { ecmaFeatures: { jsx: true } },
-		},
-		plugins: {
-			react: reactPlugin,
-			'react-hooks': reactHooks,
-			'@stylistic': stylistic,
-		},
-		settings: {
-			react: { version: 'detect' },
-		},
-		rules: {
-			// --- formatting via @stylistic (acts as your formatter with --fix) ---
-			'@stylistic/indent': ['error', 'tab', { SwitchCase: 1 }],
-			'@stylistic/comma-dangle': ['error', {
-				arrays: 'only-multiline',
-				objects: 'always-multiline',
-				imports: 'only-multiline',
-				exports: 'only-multiline',
-			}],
-			'@stylistic/no-tabs': ['error', { allowIndentationTabs: true }],
-
-			// hooks recommended (flat form)
-			'react-hooks/rules-of-hooks': 'error',
-			'react-hooks/exhaustive-deps': 'warn',
-
-			// --- project guard ---
-			'no-restricted-globals': ['error', { name: 'find', message: 'not imported' }],
-		},
-	},
-
-	// 3) Common ignores
-	{
-		ignores: [
-			'node_modules/**',
-			'dist/**',
-			'build/**',
-			'coverage/**',
-			'**/*.min.js'
-		],
-	}
+const ignores = [
+	'**/node_modules',
+	'**/dist',
 ]
+
+const language = {
+	name: 'tracknamic/language',
+	languageOptions: {
+		ecmaVersion: 'latest',
+		sourceType: 'module'
+	},
+	linterOptions: {
+		reportUnusedDisableDirectives: true
+	}
+}
+
+const standardStyle = {
+	name: 'tracknamic/standard-style',
+	rules: {
+		// StandardJS-style formatting
+		semi: ['error', 'never'],
+		quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+		indent: ['error', 2, { SwitchCase: 1 }],
+		'arrow-parens': ['error', 'as-needed'],
+		'comma-dangle': ['error', 'always-multiline'],
+		'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
+		'object-curly-spacing': ['error', 'always'],
+		'template-curly-spacing': ['error', 'never'],
+
+		// Common code-quality preferences in StandardJS
+		'no-var': 'error',
+		'prefer-const': 'error',
+		'prefer-arrow-callback': ['error', { allowNamedFunctions: false, allowUnboundThis: true }],
+		eqeqeq: ['error', 'always'],
+		'no-unneeded-ternary': 'error',
+		'no-useless-return': 'error',
+		'no-unused-vars': ['warn', { args: 'none', ignoreRestSiblings: true }],
+		'spaced-comment': ['error', 'always', { markers: ['!'] }],
+		'no-trailing-spaces': 'error',
+		'eol-last': ['error', 'always']
+	}
+}
+
+const base = [
+	{ name: 'tracknamic/ignores', ignores },
+	js.configs.recommended,
+	importX.flatConfigs.recommended,
+	{
+		name: 'tracknamic/node+promise',
+		plugins: { n, promise },
+		rules: {
+			...(n.configs?.recommended?.rules ?? {}),
+			...(promise.configs?.recommended?.rules ?? {})
+		}
+	},
+	language,
+	standardStyle
+]
+
+export default base

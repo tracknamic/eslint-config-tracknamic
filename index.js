@@ -6,6 +6,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 
 const ignores = [
 	'**/node_modules',
+	'**/public',
 	'**/dist',
 ]
 

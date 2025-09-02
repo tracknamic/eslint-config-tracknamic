@@ -93,16 +93,17 @@ const reactAndHooks = {
 }
 
 const nodeAndPromise = {
-	name: 'tracknamic/node+promise',
-	plugins: { n, promise },
-	rules: {
-		...(n.configs?.recommended?.rules ?? {}),
-		...(promise.configs?.recommended?.rules ?? {}),
-		// Our project uses path aliases (e.g., '@/components/*') via jsconfig
-		// eslint-plugin-n does not understand these aliases, so disable its missing-import checks.
-		'n/no-missing-import': 'off',
-		'n/no-missing-require': 'off',
-	},
+    name: 'tracknamic/node+promise',
+    plugins: { n, promise },
+    rules: {
+        ...(n.configs?.recommended?.rules ?? {}),
+        ...(promise.configs?.recommended?.rules ?? {}),
+        // Our project uses path aliases (e.g., '@/components/*') via jsconfig
+        // eslint-plugin-n does not understand these aliases, so disable its missing-import checks.
+        'n/no-missing-import': 'off',
+        'n/no-missing-require': 'off',
+        'n/no-unsupported-features/node-builtins': 'off',
+    },
 }
 
 const base = [

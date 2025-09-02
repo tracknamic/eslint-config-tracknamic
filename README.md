@@ -9,7 +9,7 @@ Shareable ESLint flat config used at Tracknamic. It enforces a StandardJS‑styl
 Install this config directly from GitHub along with its peer dependencies in the consumer repo:
 
 ```sh
-npm i -D eslint-config-tracknamic@github:tracknamic/linter eslint @eslint/js eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
+npm i -D eslint-config-tracknamic@github:tracknamic/eslint-config-tracknamic eslint @eslint/js eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
 ```
 
 Alternative (HTTPS):
@@ -34,7 +34,7 @@ Create `eslint.config.js` at the repo root:
 import tracknamic from 'eslint-config-tracknamic'
 
 export default [
-  ...tracknamic
+  ...tracknamic,
 ]
 ```
 

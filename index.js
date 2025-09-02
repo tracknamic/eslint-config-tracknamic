@@ -49,7 +49,12 @@ const standardStyle = {
 		quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
 		indent: ['error', 'tab'],
 		'arrow-parens': ['error', 'as-needed'],
-		'comma-dangle': ['error', 'always-multiline'],
+		"comma-dangle": ["error", {
+			"arrays": "only-multiline",
+			"objects": "always-multiline",
+			"imports": "only-multiline",
+			"exports": "only-multiline"
+		}],
 		'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
 		'object-curly-spacing': ['error', 'always'],
 		'template-curly-spacing': ['error', 'never'],

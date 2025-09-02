@@ -6,16 +6,22 @@ Shareable ESLint flat config used at Tracknamic. It enforces a StandardJS‑styl
 
 ## Install
 
-Install this config and its peer dependencies in the consumer repo:
+Install this config directly from GitHub along with its peer dependencies in the consumer repo:
 
 ```sh
-npm i -D eslint-config-tracknamic eslint @eslint/js eslint-plugin-import-x eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks
+npm i -D eslint-config-tracknamic@github:tracknamic/linter eslint @eslint/js eslint-plugin-import-x eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
+```
+
+Alternative (HTTPS):
+
+```sh
+npm i -D git+https://github.com/tracknamic/linter.git eslint @eslint/js eslint-plugin-import-x eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
 ```
 
 Requirements:
 
 - Node >= 18.18.0
-- ESLint >= 9 (flat config)
+- ESLint >= 9 (flat config). Use `eslint-plugin-react-hooks` v5 or newer.
 
 ---
 

@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import { flatConfigs } from 'eslint-plugin-import-x'
 import n from 'eslint-plugin-n'
 import promise from 'eslint-plugin-promise'
-import react from 'eslint-plugin-react'
+import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 
 const ignores = [
@@ -63,13 +63,13 @@ const standardStyle = {
 const react = {
 	name: 'tracknamic/react+hooks',
 	files: ['**/*.{js,jsx}'],
-	plugins: { react, 'react-hooks': reactHooks },
+	plugins: { react: reactPlugin, 'react-hooks': reactHooks },
 	languageOptions: {
 		parserOptions: { ecmaFeatures: { jsx: true } }
 	},
 	settings: { react: { version: 'detect' } },
 	rules: {
-		...(react.configs?.recommended?.rules ?? {}),
+		...(reactPlugin.configs?.recommended?.rules ?? {}),
 		...(reactHooks.configs?.recommended?.rules ?? {})
 	}
 }

@@ -15,6 +15,14 @@ const language = {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
 		globals: {
+			console: 'readonly',
+			fetch: 'readonly',
+			window: 'readonly',
+			document: 'readonly',
+			navigator: 'readonly',
+			EventSource: 'readonly',
+			FormData: 'readonly',
+			localStorage: 'readonly',
 			global: 'readonly',
 			process: 'readonly',
 			Buffer: 'readonly',
@@ -38,7 +46,7 @@ const standardStyle = {
 		// StandardJS-style formatting
 		semi: ['error', 'never'],
 		quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
-		indent: ['error', 'tab', { SwitchCase: 1 }],
+		indent: ['error', 'tab'],
 		'arrow-parens': ['error', 'as-needed'],
 		'comma-dangle': ['error', 'always-multiline'],
 		'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
@@ -56,6 +64,9 @@ const standardStyle = {
 		'spaced-comment': ['error', 'always', { markers: ['!'] }],
 		'no-trailing-spaces': 'error',
 		'eol-last': ['error', 'always'],
+
+		// --- project guard ---
+		'no-restricted-globals': ['error', { name: 'find', message: 'not imported' }],
 	},
 }
 
@@ -64,13 +75,15 @@ const reactAndHooks = {
 	files: ['**/*.{js,jsx}'],
 	plugins: { react: reactPlugin, 'react-hooks': reactHooks },
 	languageOptions: {
-		parserOptions: { ecmaFeatures: { jsx: true } }
+		parserOptions: { ecmaFeatures: { jsx: true } },
 	},
 	settings: { react: { version: 'detect' } },
 	rules: {
 		...(reactPlugin.configs?.recommended?.rules ?? {}),
-		...(reactHooks.configs?.recommended?.rules ?? {})
-	}
+		...(reactHooks.configs?.recommended?.rules ?? {}),
+		'react/react-in-jsx-scope': 'off',
+		'react/jsx-uses-react': 'off',
+	},
 }
 
 const nodeAndPromise = {
@@ -79,6 +92,10 @@ const nodeAndPromise = {
 	rules: {
 		...(n.configs?.recommended?.rules ?? {}),
 		...(promise.configs?.recommended?.rules ?? {}),
+		// Our project uses path aliases (e.g., '@/components/*') via jsconfig
+		// eslint-plugin-n does not understand these aliases, so disable its missing-import checks.
+		'n/no-missing-import': 'off',
+		'n/no-missing-require': 'off',
 	},
 }
 

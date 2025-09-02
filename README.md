@@ -10,7 +10,6 @@ Install this config and its peer dependencies in the consumer repo:
 
 ```sh
 npm i -D eslint-config-tracknamic eslint @eslint/js eslint-plugin-import-x eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks
-# pnpm add -D ...  |  yarn add -D ... (if you prefer)
 ```
 
 Requirements:

@@ -1,7 +1,9 @@
 import js from '@eslint/js'
-import importX from 'eslint-plugin-import-x'
+import { flatConfigs } from 'eslint-plugin-import-x'
 import n from 'eslint-plugin-n'
 import promise from 'eslint-plugin-promise'
+import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
 
 const ignores = [
 	'**/node_modules',
@@ -12,11 +14,23 @@ const language = {
 	name: 'tracknamic/language',
 	languageOptions: {
 		ecmaVersion: 'latest',
-		sourceType: 'module'
+		sourceType: 'module',
+		globals: {
+			global: 'readonly',
+			process: 'readonly',
+			Buffer: 'readonly',
+			setTimeout: 'readonly',
+			clearTimeout: 'readonly',
+			setInterval: 'readonly',
+			clearInterval: 'readonly',
+			setImmediate: 'readonly',
+			clearImmediate: 'readonly',
+			queueMicrotask: 'readonly',
+		},
 	},
 	linterOptions: {
-		reportUnusedDisableDirectives: true
-	}
+		reportUnusedDisableDirectives: true,
+	},
 }
 
 const standardStyle = {
@@ -25,7 +39,7 @@ const standardStyle = {
 		// StandardJS-style formatting
 		semi: ['error', 'never'],
 		quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
-		indent: ['error', 2, { SwitchCase: 1 }],
+		indent: ['error', 'tab', { SwitchCase: 1 }],
 		'arrow-parens': ['error', 'as-needed'],
 		'comma-dangle': ['error', 'always-multiline'],
 		'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
@@ -42,24 +56,41 @@ const standardStyle = {
 		'no-unused-vars': ['warn', { args: 'none', ignoreRestSiblings: true }],
 		'spaced-comment': ['error', 'always', { markers: ['!'] }],
 		'no-trailing-spaces': 'error',
-		'eol-last': ['error', 'always']
+		'eol-last': ['error', 'always'],
+	},
+}
+
+const react = {
+	name: 'tracknamic/react+hooks',
+	files: ['**/*.{js,jsx}'],
+	plugins: { react, 'react-hooks': reactHooks },
+	languageOptions: {
+		parserOptions: { ecmaFeatures: { jsx: true } }
+	},
+	settings: { react: { version: 'detect' } },
+	rules: {
+		...(react.configs?.recommended?.rules ?? {}),
+		...(reactHooks.configs?.recommended?.rules ?? {})
 	}
+}
+
+const node = {
+	name: 'tracknamic/node+promise',
+	plugins: { n, promise },
+	rules: {
+		...(n.configs?.recommended?.rules ?? {}),
+		...(promise.configs?.recommended?.rules ?? {}),
+	},
 }
 
 const base = [
 	{ name: 'tracknamic/ignores', ignores },
 	js.configs.recommended,
-	importX.flatConfigs.recommended,
-	{
-		name: 'tracknamic/node+promise',
-		plugins: { n, promise },
-		rules: {
-			...(n.configs?.recommended?.rules ?? {}),
-			...(promise.configs?.recommended?.rules ?? {})
-		}
-	},
+	flatConfigs.recommended,
+	react,
+	node,
 	language,
-	standardStyle
+	standardStyle,
 ]
 
 export default base

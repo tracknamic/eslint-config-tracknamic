@@ -1,25 +1,31 @@
 # eslint-config-tracknamic
 
-> Shareable [ESLint](https://eslint.org/) **flat config** used at Tracknamic.
-> Based on StandardJS + React + Hooks, with Tracknamic’s custom rules.
+Shareable ESLint flat config used at Tracknamic. It enforces a StandardJS‑style code format (no semicolons, single quotes, 2‑space indent) and common JS quality rules. Consumers use ESLint both to lint and to format with `--fix` — no Prettier required.
 
 ---
 
-## 📦 Installation
+## Install
 
-In your project, install this config **and its peer dependencies**:
+Install this config and its peer dependencies in the consumer repo:
 
 ```sh
-npm i -D eslint-config-tracknamic@git+https://github.com/tracknamic/linter.git eslint @eslinter/eslint-config-standard @stylistic/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks
+npm i -D eslint-config-tracknamic eslint @eslint/js eslint-plugin-import-x eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks
+# pnpm add -D ...  |  yarn add -D ... (if you prefer)
 ```
+
+Requirements:
+
+- Node >= 18.18.0
+- ESLint >= 9 (flat config)
 
 ---
 
-## ⚙️ Usage
+## Use
 
-Create a file called **`eslint.config.js`** in the root of your project:
+Create `eslint.config.js` at the repo root:
 
 ```js
+// eslint.config.js
 import tracknamic from 'eslint-config-tracknamic'
 
 export default [
@@ -27,96 +33,97 @@ export default [
 ]
 ```
 
-That’s it — ESLint will pick up Tracknamic’s config.
+That’s it — the config includes sensible ignores and formatting rules.
 
----
+Optional overrides you may add in the consumer project:
 
-## 🛠️ Running ESLint
-
-Lint your code:
-
-```sh
-npx eslint .
-```
-
-Fix and format (ESLint doubles as your formatter):
-
-```sh
-npx eslint . --fix
-```
-
-Add convenient scripts (optional) in your `package.json`:
-
-```json
+```js
+// CommonJS files (if you have any)
 {
-  "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+  files: ['**/*.cjs'],
+  languageOptions: { sourceType: 'commonjs' }
+},
+// Project‑specific rules
+{
+  rules: {
+    // Example: relax no-unused-vars to 'off'
+    'no-unused-vars': 'off'
   }
 }
 ```
 
 ---
 
-## ✨ Features
+## Lint & Format
 
-* **Flat config only** (no `.eslintrc.json`, no `@eslint/compat`)
-* **StandardJS baseline** via `@eslinter/eslint-config-standard`
-* **React support** with `eslint-plugin-react`
-* **Hooks rules** with `eslint-plugin-react-hooks`
-* **Formatting built-in** via `@stylistic/eslint-plugin`
+- Lint: `npx eslint .`
+- Fix/format: `npx eslint . --fix`
 
-  * Indentation with tabs
-  * Trailing commas for objects (multiline)
-  * JSX indentation rules
-* **Custom rules** for Tracknamic:
+Add scripts to `package.json` in the consumer repo:
 
-  * Restrict global `find` usage
-
----
-
-## 📝 Migration Guide (from `.eslintrc.json`)
-
-If your project already uses an old `.eslintrc.json`:
-
-1. **Uninstall old Standard config** (if you had it):
-
-   ```sh
-   npm remove eslint-config-standard
-   ```
-2. **Install Tracknamic config + peers** (see installation step above).
-3. **Delete `.eslintrc.json`** from your project root.
-4. **Add `eslint.config.js`**:
-
-   ```js
-   import tracknamic from 'eslint-config-tracknamic'
-
-   export default [
-     ...tracknamic
-   ]
-   ```
-5. **Run ESLint** to make sure everything works:
-
-   ```sh
-   npx eslint . --fix
-   ```
-6. (Optional) Update your **editor/IDE** to ensure it uses ESLint v9 and flat config.
+```json
+{
+  "scripts": {
+    "lint": "eslint .",
+    "format": "eslint . --fix"
+  }
+}
+```
 
 ---
 
-## ✅ CI (GitHub Actions Example)
+## What You Get
 
-Create **`.github/workflows/lint.yml`** in your repo to lint on every PR:
+- @eslint/js: recommended rules
+- eslint-plugin-import-x: recommended import rules
+- eslint-plugin-n: Node.js best practices
+- eslint-plugin-promise: Promise best practices
+- eslint-plugin-react: React best practices (recommended)
+- eslint-plugin-react-hooks: Hooks rules (recommended)
+- Tracknamic style rules (formatting via ESLint):
+  - semi: never
+  - quotes: single
+  - indent: 2 spaces (switch case +1)
+  - arrow-parens: as-needed
+  - comma-dangle: always-multiline
+  - space-before-function-paren: { anonymous: always, named: never, asyncArrow: always }
+  - object-curly-spacing: always
+  - template-curly-spacing: never
+  - eol-last: always, no trailing spaces
+  - additional quality rules: no-var, prefer-const, prefer-arrow-callback, eqeqeq, no-unneeded-ternary, no-useless-return, no-unused-vars (warn), spaced-comment
+- Defaults:
+  - ECMAScript: latest
+  - Source type: module (ESM)
+  - Ignores: `**/node_modules`, `**/dist`
+  - Linter: `reportUnusedDisableDirectives: true`
+
+---
+
+## Editor (VS Code)
+
+Install the ESLint extension and add to `.vscode/settings.json` in the consumer repo:
+
+```json
+{
+  "eslint.useFlatConfig": true,
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+  "editor.formatOnSave": false
+}
+```
+
+This uses ESLint as the formatter on save.
+
+---
+
+## CI (GitHub Actions)
+
+`.github/workflows/lint.yml` in the consumer repo:
 
 ```yaml
 name: Lint
-
 on:
-  pull_request:
-    branches: [ main ]
-  push:
-    branches: [ main ]
-
+  push: { branches: [ main ] }
+  pull_request: { branches: [ main ] }
 jobs:
   eslint:
     runs-on: ubuntu-latest
@@ -131,40 +138,15 @@ jobs:
 
 ---
 
-## 🧩 Editor Setup (VS Code)
+## Troubleshooting
 
-Install the **ESLint** extension. Optionally add the following to `.vscode/settings.json`:
-
-```json
-{
-  "eslint.useFlatConfig": true,
-  "eslint.experimental.useFlatConfig": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "editor.formatOnSave": false
-}
-```
-
-> Tip: We use ESLint as the formatter, so `formatOnSave` can be off and `fixAll.eslint` handles formatting.
+- Plugin not found: ensure peers (`eslint`, `@eslint/js`, `eslint-plugin-import-x`, `eslint-plugin-n`, `eslint-plugin-promise`) are installed in the consumer repo.
+- Flat config not applied: ensure ESLint v9+ and an `eslint.config.js` at the repo root.
+- ESM vs CJS errors: the config defaults to ESM; add a `files` override for `*.cjs` as shown above if needed.
 
 ---
 
-## 🛠 Troubleshooting
+## Notes
 
-* **"Failed to load plugin" / "plugin not found"**
-  Ensure the consuming project installed the peer dependencies listed in the install command. ESLint resolves plugins from the project root.
-
-* **Conflicting or multiple ESLint versions**
-  Make sure there’s only one `eslint` in the project. Remove extras from nested `node_modules`.
-
-* **Old configs still applied**
-  Delete legacy `.eslintrc.*` files. Only keep `eslint.config.js`.
-
----
-
-## 🔑 Notes
-
-* Requires **ESLint v9+** and Node **>= 18.18.0**.
-* No `prettier` needed — ESLint handles formatting with `--fix`.
-* Typical ignores: `node_modules/`, `dist/`, `build/`, `coverage/`, `.eslintcache`. (Your project `.gitignore` should already exclude these.)
+- React is included (JS/JSX). No TypeScript presets. Add TS separately if needed.
+- No Prettier required — run `eslint --fix` to format.

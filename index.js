@@ -1,5 +1,4 @@
 import js from '@eslint/js'
-import { flatConfigs } from 'eslint-plugin-import-x'
 import n from 'eslint-plugin-n'
 import promise from 'eslint-plugin-promise'
 import reactPlugin from 'eslint-plugin-react'
@@ -60,7 +59,7 @@ const standardStyle = {
 	},
 }
 
-const react = {
+const reactAndHooks = {
 	name: 'tracknamic/react+hooks',
 	files: ['**/*.{js,jsx}'],
 	plugins: { react: reactPlugin, 'react-hooks': reactHooks },
@@ -74,7 +73,7 @@ const react = {
 	}
 }
 
-const node = {
+const nodeAndPromise = {
 	name: 'tracknamic/node+promise',
 	plugins: { n, promise },
 	rules: {
@@ -86,9 +85,8 @@ const node = {
 const base = [
 	{ name: 'tracknamic/ignores', ignores },
 	js.configs.recommended,
-	flatConfigs.recommended,
-	react,
-	node,
+	reactAndHooks,
+	nodeAndPromise,
 	language,
 	standardStyle,
 ]

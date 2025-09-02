@@ -9,13 +9,13 @@ Shareable ESLint flat config used at Tracknamic. It enforces a StandardJS‑styl
 Install this config directly from GitHub along with its peer dependencies in the consumer repo:
 
 ```sh
-npm i -D eslint-config-tracknamic@github:tracknamic/linter eslint @eslint/js eslint-plugin-import-x eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
+npm i -D eslint-config-tracknamic@github:tracknamic/linter eslint @eslint/js eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
 ```
 
 Alternative (HTTPS):
 
 ```sh
-npm i -D git+https://github.com/tracknamic/linter.git eslint @eslint/js eslint-plugin-import-x eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
+npm i -D git+https://github.com/tracknamic/linter.git eslint @eslint/js eslint-plugin-n eslint-plugin-promise eslint-plugin-react eslint-plugin-react-hooks@^5
 ```
 
 Requirements:
@@ -80,7 +80,6 @@ Add scripts to `package.json` in the consumer repo:
 ## What You Get
 
 - @eslint/js: recommended rules
-- eslint-plugin-import-x: recommended import rules
 - eslint-plugin-n: Node.js best practices
 - eslint-plugin-promise: Promise best practices
 - eslint-plugin-react: React best practices (recommended)
@@ -145,7 +144,7 @@ jobs:
 
 ## Troubleshooting
 
-- Plugin not found: ensure peers (`eslint`, `@eslint/js`, `eslint-plugin-import-x`, `eslint-plugin-n`, `eslint-plugin-promise`) are installed in the consumer repo.
+- Plugin not found: ensure peers (`eslint`, `@eslint/js`, `eslint-plugin-n`, `eslint-plugin-promise`) are installed in the consumer repo.
 - Flat config not applied: ensure ESLint v9+ and an `eslint.config.js` at the repo root.
 - ESM vs CJS errors: the config defaults to ESM; add a `files` override for `*.cjs` as shown above if needed.
 
